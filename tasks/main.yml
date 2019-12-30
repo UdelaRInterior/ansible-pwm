@@ -1,0 +1,62 @@
+---
+
+- name: Create dir
+  file:
+    path: '{{ pwm_path_config }}'
+    state: directory
+    owner: tomcat
+    group: tomcat
+    mode: 0700
+
+- name: Copy template
+  template:
+    src: PwmConfiguration.xml.j2
+    dest: '{{ pwm_path_config }}/PwmConfiguration.xml'
+    owner: tomcat
+    group: tomcat
+
+- name: Copy .war
+  copy:
+    src: "{{ pwm_name_war }}"
+    dest: "/var/lib/tomcat/webapps/pwm.war"
+    owner: tomcat
+    group: tomcat
+    mode: 0755
+  register: service_create
+
+- name: Reload systemctl daemon
+  service:
+    name: tomcat
+    state: restarted
+  when: service_create.changed
+
+- name: Copy template
+  template:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+    owner: tomcat
+    group: tomcat
+  with_items:
+    - { src: 'dominios.j2', dest: '{{ pwm_path_config }}/dominios.txt' }
+    - { src: 'main.cf.j2', dest: '/etc/postfix/main.cf' }
+  notify:
+    - tomcat
+
+- name: Add path config
+  lineinfile:
+    dest: /var/lib/tomcat/bin/setenv.sh
+    state: present
+    regexp: '^%PWM_APPLICATIONPATH'
+    line: 'PWM_APPLICATIONPATH={{ pwm_path_config }}'
+
+- name: Add path config
+  lineinfile:
+    path: /var/lib/tomcat/webapps/pwm/WEB-INF/web.xml
+    regexp: '<param-value>unspecified</param-value>'
+    line: '<param-value>{{ pwm_path_config }}</param-value>'
+    owner: tomcat
+    group: tomcat
+    state: present
+  notify:
+    - tomcat
+  when: service_create.changed

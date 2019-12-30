@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  role_name: pwm
+  author: Victor Torterola
+  description: Install PWM
+  company: Udelar
+  license: GPLv2
+  min_ansible_version: 1.9
+  platforms:
+  - name: Debian
+    versions:
+    - jessie
+  galaxy_tags:
+  - pwm
+  - ldap
+  - web
+  - security
+  - debian
+dependencies: []

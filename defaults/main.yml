@@ -1,0 +1,127 @@
+---
+pwm_path_config: /media/pwm
+pwm_name_war: 'pwm-2.0.0-SNAPSHOT.war'
+pwm_domains:
+  - domain1.net:cn=service1,ou=groups,dc=server,dc=net:cn=all,cn=lists,cn=sympa,ou=groups,dc=server,dc=net
+  - domain2.net:cn=service2,ou=groups,dc=server,dc=net:cn=west,ou=groups,dc=server,dc=net:cn=all_godel,cn=lists,cn=sympa,ou=groups,dc=server,dc=net
+pwm_services:
+  - cn=owncloud,ou=groups,dc=server,dc=net
+  - cn=redmine,ou=groups,dc=server,dc=net
+  - cn=sympa,ou=groups,dc=server,dc=net
+  - cn=openfire,ou=groups,dc=server,dc=net  
+
+pwm_template_ldap: OPEN_LDAP
+pwm_template_storage: LDAP
+pwm_ldap_profile_list: default
+pwm_ldap_serverurls: 'ldap://server.net:389'
+pwm_ldap_proxy_username: 'cn=admin,dc=server,dc=net'
+pwm_ldap_proxy_password: '{{ pwm_ldap_proxy_password_vault }}'
+pwm_ldap_rootcontexts: 'ou=gente,dc=server,dc=net'
+pwm_ldap_testuser_username: 'cn=uprueba,ou=gente,dc=server,dc=net'
+pwm_pwmadmin_querymatch: !unsafe '{"ldapProfileID":"default","ldapBase":"cn=admin,ou=groups,dc=server,dc=net","type":"ldapGroup"}'
+#pwm_db_classname: ''
+#pwm_db_url: ''
+#pwm_db_username: ''
+#pwm_db_password: ''
+pwm_publishstats_enable: false
+pwm_selfurl: 'http://serverPWM/pwm'
+pwm_display_showdetailederrors: true
+pwm_securitykey: '{{ pwm_securitykey_vault }}'
+pwm_password_policy_source: PWM
+pwm_interface_theme: autumn
+pwm_forgottenusername_enable: true
+pwm_recovery_searchfilter: !unsafe '(&amp;(objectClass=person)(cn=%cn%))'
+#pwm_homeurl: ''
+pwm_introurl: '/public/'
+pwm_guest_enable: true
+pwm_guest_createcontext: 'ou=gente'
+pwm_newuser_enable: true
+pwm_recovery_querymatch: !unsafe '{"ldapProfileID":"all","ldapQuery":"(objectClass=person)","ldapBase":"","type":"ldapQuery"}'
+pwm_recovery_verificationmethods: !unsafe '{"methodSettings":{"PREVIOUS_AUTH":{"enabledState":"disabled"},"ATTRIBUTES":{"enabledState":"disabled"},"CHALLENGE_RESPONSES":{"enabledState":"required"},"TOKEN":{"enabledState":"disabled"},"OTP":{"enabledState":"disabled"},"REMOTE_RESPONSES":{"enabledState":"disabled"},"OAUTH":{"enabledState":"disabled"}},"minOptionalRequired":0}'
+pwm_ldap_guid_autoaddvalue: true
+pwm_newuser_passwordpolicy_user: 'cn=admin,dc=server,dc=net'
+pwm_newuser_form: 
+  - !unsafe '{"name":"mail","minimumLength":1,"maximumLength":64,"type":"email","required":true,"confirmationRequired":false,"readonly":false,"unique":true,"multivalue":false,"labels":{"":"Email Address"},"regexErrors":{"":"Email Address has invalid characters"},"description":{"":""},"regex":"^[a-zA-Z0-9 .,@]*$","placeholder":"username@example.com","selectOptions":{},"maximumSize":0}'
+  - !unsafe '{"name":"givenName","minimumLength":1,"maximumLength":64,"type":"text","required":true,"confirmationRequired":false,"readonly":false,"unique":false,"multivalue":false,"labels":{"":"First Name"},"regexErrors":{"":""},"description":{"":""},"regex":"^[a-zA-Z0-9 .,@]*$","selectOptions":{},"maximumSize":0}'
+  - !unsafe '{"name":"sn","minimumLength":1,"maximumLength":64,"type":"text","required":true,"confirmationRequired":false,"readonly":false,"unique":false,"multivalue":false,"labels":{"":"Last Name"},"regexErrors":{"":""},"description":{"":""},"regex":"^[a-zA-Z0-9 .,@]*$","selectOptions":{},"maximumSize":0}'
+  - !unsafe '{"name":"cn","minimumLength":0,"maximumLength":255,"type":"text","source":"ldap","required":false,"confirmationRequired":false,"readonly":false,"unique":false,"multivalue":false,"labels":{"":"User Name"},"regexErrors":{"":""},"description":{"":""},"regex":"","placeholder":"","javascript":"","selectOptions":{},"mimeTypes":["image/gif","image/png","image/jpeg","image/bmp","image/webp"],"maximumSize":65000}'
+pwm_newuser_createcontext: 'ou=gente,dc=server,dc=net'
+pwm_challenge_requiredattributes:
+  - !unsafe '{"name":"pwmResponseSet","minimumLength":0,"maximumLength":255,"type":"text","source":"ldap","required":false,"confirmationRequired":false,"readonly":false,"unique":false,"multivalue":false,"labels":{"":"pwmResponseSet"},"regexErrors":{"":""},"description":{"":""},"regex":"","placeholder":"","javascript":"","selectOptions":{},"mimeTypes":["image/gif","image/png","image/jpeg","image/bmp","image/webp"],"maximumSize":65000}'
+  - !unsafe '{"name":"pwdAccountLockedTime","minimumLength":0,"maximumLength":255,"type":"text","source":"ldap","required":false,"confirmationRequired":false,"readonly":false,"unique":false,"multivalue":false,"labels":{"":"pwdAccountLockedTime"},"regexErrors":{"":""},"description":{"":""},"regex":"0","placeholder":"","javascript":"","selectOptions":{},"mimeTypes":["image/gif","image/png","image/jpeg","image/bmp","image/webp"],"maximumSize":65000}'
+#pwm_newuser_username_definition: ''
+#pwm_challenge_policy_queryMatch: ''
+pwm_external_webservices_enable: true
+pwm_webservices_public_enable: ForgottenPassword
+#pwm_webservices_queryMatch: ''
+pwm_webservices_enablereadanswers: true
+#pwm_webservices_thirdParty_queryMatch: ''
+#pwm_webservices_userattributes: ''
+pwm_forcebasicauth: false
+#pwm_display_masktokenfields: ''
+pwm_ldap_user_appdata_attribute: pwmData
+pwm_response_hashmethod: SHA1_SALT
+#pwm_recovery_action: ''
+#pwm_activateuser_allowunlock: ''
+pwm_helpdesk_enable: true
+pwm_recovery_allowwhenlocked: true
+pwm_ldap_ad_proxyforgotten: false
+#pwm_ldap_ad_allowauth_expired: ''
+pwm_password_allowchange_querymatch: !unsafe '{"ldapProfileID":"all","ldapQuery":"(objectClass=person)","type":"ldapQuery"}'
+pwm_helpdesk_verificationmethods: !unsafe '{"methodSettings":{"ATTRIBUTES":{"enabledState":"disabled"},"TOKEN":{"enabledState":"disabled"},"OTP":{"enabledState":"disabled"},"PREVIOUS_AUTH":{"enabledState":"disabled"},"CHALLENGE_RESPONSES":{"enabledState":"disabled"},"REMOTE_RESPONSES":{"enabledState":"disabled"},"OAUTH":{"enabledState":"disabled"}},"minOptionalRequired":0}'
+#pwm_ldap_ad_enforcepwhistoryonset: ''
+pwm_ldap_ad_allowauth_requirenewpassword: false
+#pwm_guest_admingroup: ''
+pwm_activateuser_token_sendmethod: EMAILONLY
+pwm_activateuser_enable: false
+pwm_display_newuser_agreement: 'Terms and conditions of use'
+pwm_email_smtp_address: localhost
+pwm_email_newuser: 
+  - !unsafe '<value>{"to":"@User:Email@","from":"New User Registration &lt;@DefaultEmailFromAddress@&gt;","subject":"Welcome","bodyPlain":"Thank you for registering your account, @LDAP:givenName@.","bodyHtml":"&lt;b&gt;Thank you for registering your account, &lt;/b&gt;&lt;b&gt;@LDAP:givenName@.&lt;/b&gt;"}</value>'
+  - !unsafe '<value locale="es">{"to":"@User:Email@","from":"Registro  &lt;@DefaultEmailFromAddress@&gt;","subject":"Registro correcto","bodyPlain":"@LDAP:givenName@ gracias por su registro.","bodyHtml":"&lt;b&gt;@LDAP:givenName@ gracias por su registro.&lt;/b&gt;"}</value>'
+pwm_email_newuser_token: 
+  - !unsafe '<value>{"to":"@User:Email@","from":"New User Registration &lt;@DefaultEmailFromAddress@&gt;","subject":"New User Verification","bodyPlain":"Thank you for requesting a new account. To continue with your account registration, please copy and paste the following code on the registration form:\n\n%TOKEN%\n\nIf you did not request to create a new account, you do not need to take any action.","bodyHtml":"Thank you for requesting a new account.  To continue with your account registration, please &lt;a href=\"@SiteURL@/public/newuser/%TOKEN%\"&gt;click here&lt;/a&gt; to continue.&lt;br /&gt;&lt;br /&gt;If for some reason this link does not work, you can copy and paste the following code on the registration form:&lt;br /&gt;&lt;br /&gt;&lt;b&gt;&lt;pre&gt;%TOKEN%&lt;/pre&gt;&lt;/b&gt;&lt;br /&gt;If you did not request to create a new account, you do not need to take any action."}</value>'
+  - !unsafe '<value locale="es">{"to":"@User:Email@","from":"Registro &lt;@DefaultEmailFromAddress@&gt;","subject":"Verificacion de nuevo usuario","bodyPlain":"Gracias por solicitar una nueva cuenta. Para continuar con el registro de su cuenta, copie y pegue el siguiente código en el formulario de registro:\n\n%TOKEN%\n\nSi no solicitó crear una nueva cuenta, no necesita realizar ninguna acción.","bodyHtml":"Gracias por solicitar una nueva cuenta. Para continuar con el registro de su cuenta, copie y pegue el siguiente código en el formulario de registro:&lt;br /&gt;&lt;br /&gt;&lt;b&gt;%TOKEN%&lt;/b&gt;&lt;br /&gt;&lt;br /&gt; Si no solicitó crear una nueva cuenta, no necesita realizar ninguna acción."}</value>'
+pwm_email_helpdesk_token: 
+  - !unsafe '<value>{"to":"@User:Email@","from":"Helpdesk &lt;@DefaultEmailFromAddress@&gt;","subject":"Helpdesk Verification","bodyPlain":"Your helpdesk has sent you a code to verify your identity. Your verification code is:\n\n%TOKEN%","bodyHtml":"Your helpdesk has sent you a code to verify your identity. Your verification code is: %TOKEN%."}</value>'
+pwm_email_guest:
+  - !unsafe '<value>{"to":"@User:Email@","from":"Guest Registration Agent &lt;@DefaultEmailFromAddress@&gt;","subject":"Welcome","bodyPlain":"Your account has been created.\n\nYour username is: @User:ID@\nYour password is: @User:Password@","bodyHtml":"&lt;b&gt;Your account has been created.&lt;/b&gt;&lt;p&gt;Your username is:@User:ID@&lt;br /&gt;Your password is: &lt;b&gt;@User:Password@&lt;/b&gt;&lt;/p&gt;"}</value>'
+  - !unsafe '<value locale="es">{"to":"@User:Email@","from":"Agente de registro de invitados &lt;@DefaultEmailFromAddress@&gt;","subject":"Subject","bodyPlain":"Su cuenta ha sido creada.\n\nSu nombre de usuario es: @User:ID@\nSu contraseña es: @User:Password@","bodyHtml":"&lt;b&gt;Su cuenta ha sido creada.&lt;/b&gt;&lt;p&gt;Su nombre de usuario es: @User:ID@&lt;br /&gt;Su contraseña es: &lt;b&gt;@User:Password@&lt;/b&gt;&lt;/p&gt;"}</value>'
+pwm_newuser_writeattributes: !unsafe '{"name":"memberof","description":"","webActions":[],"ldapActions":[{"ldapMethod":"add","attributeName":"memberof","attributeValue":"cn=sympa,ou=grupos,dc=interior,dc=udelar,dc=edu,dc=uy"},{"ldapMethod":"add","attributeName":"memberof","attributeValue":"cn=owncloud,ou=grupos,dc=interior,dc=udelar,dc=edu,dc=uy"},{"ldapMethod":"add","attributeName":"memberof","attributeValue":"cn=redmine,ou=grupos,dc=interior,dc=udelar,dc=edu,dc=uy"},{"ldapMethod":"add","attributeName":"memberof","attributeValue":"cn=openfire,ou=grupos,dc=interior,dc=udelar,dc=edu,dc=uy"}]}'
+#pwm_webservice_userattributes: ''
+pwm_helpdesk_token_sendmethod: EMAILONLY
+pwm_challenge_minrandomssetup: 2
+pwm_challenge_helpdesk_minrandomssetup: 4
+pwm_email_smtp_type: SMTP
+pwm_email_default_fromaddress: 'admin@serverPWM'
+pwm_ldap_addobjectclasses: pwmUser
+pwm_email_changepassword:
+  - !unsafe '<value>{"to":"@User:Email@","from":"Change Password Notice &lt;@DefaultEmailFromAddress@&gt;","subject":"Password Change Notification","bodyPlain":"You have changed your password.  If you did not initiate a password change please contact your help desk immediately.","bodyHtml":"&lt;b&gt;You have changed your password.&lt;/b&gt;  If you have changed your password, then no action is required.  If you did not initiate a password change please contact your help desk."}</value>'
+  - !unsafe '<value locale="es">{"to":"@User:Email@","from":"Notificacion de cambio de password &lt;@DefaultEmailFromAddress@&gt;","subject":"Contraseña cambiada","bodyPlain":"Has cambiado tu contraseña. Si no inició un cambio de contraseña, comuníquese con su mesa de ayuda de inmediato.","bodyHtml":"&lt;b&gt;Has cambiado tu contraseña.&lt;/b&gt; &lt;br /&gt;Si no inició un cambio de contraseña, comuníquese con su mesa de ayuda de inmediato."}</value>'
+pwm_email_changepassword_helpdesk: 
+  - !unsafe '<value>{"to":"@User:Email@","from":"Change Password Notice &lt;@DefaultEmailFromAddress@&gt;","subject":"Password Change Notification","bodyPlain":"Your password has been changed by the heldesk.   You should set a new password immediately.  If you did not initiate a password change please contact your helpdesk.","bodyHtml":"&lt;b&gt;Your password has been changed by the helpdesk.&lt;/b&gt;  You should set a new password immediately.  If you did not initiate a password change please contact your helpdesk."}</value>'
+#pwm_email_usermailattribute2: ''
+pwm_ldap_defaultobjectclasses: inetOrgPerson
+pwm_password_policy_minimumlength: 8
+pwm_password_policy_maximumalpha: 0
+pwm_password_policy_minimumalpha: 4
+pwm_password_policy_minimumnumeric: 2
+pwm_password_policy_maximumsequentialrepeat: 3
+pwm_password_policy_minimumlowercase: 0
+pwm_password_policy_minimumuppercase: 1
+pwm_password_policy_minimumunique: 5
+#pwm_guest_writeattributes: ''
+pwm_captcha_recaptcha_privatekey: '{{ pwm_captcha_recaptcha_privatekey_value }}'
+pwm_captcha_recaptcha_publickey: '{{ pwm_captcha_recaptcha_publickey_value }}'
+pwm_captcha_recaptcha_mode: V3
+pwm_captcha_protectedpages: 
+  - FORGOTTEN_PASSWORD
+  - FORGOTTEN_USERNAME
+  - NEW_USER_REGISTRATION
+pwm_email_challenge_token:
+  - !unsafe '<value>{"to":"@User:Email@","from":"Forgotten Password &lt;@DefaultEmailFromAddress@&gt;","subject":"Forgotten Password Verification","bodyPlain":"Thank you for requesting a password reset. To continue with your password reset, please copy and paste the following code onto the password reset form:\n\n%TOKEN%\n\nIf you do not wish to change your password at this time, you do not need to take any action.","bodyHtml":"Thank you for requesting a password reset.  To continue with your password reset, please &lt;a href=\"@SiteURL@/public/forgottenpassword/%TOKEN%\"&gt;click here&lt;/a&gt; to continue.&lt;br /&gt;&lt;br /&gt;If for some reason this link doesnt work, you can copy and paste the following code onto the password reset form:&lt;br /&gt;&lt;br /&gt;%TOKEN%&lt;br /&gt;&lt;br /&gt;If you do not wish to change your password at this time, you do not need to take any action."}</value>'
+  - !unsafe '<value locale="es">{"to":"@User:Email@","from":"Cambio de contraseña &lt;@DefaultEmailFromAddress@&gt;","subject":"Verificación de cambio de contraseña","bodyPlain":"Gracias por solicitar un restablecimiento de contraseña. Para continuar con el restablecimiento de su contraseña, copie y pegue el siguiente código en el formulario de restablecimiento de contraseña:\n\n%TOKEN%\n\nSi no desea cambiar su contraseña en este momento, no necesita realizar ninguna acción.\n","bodyHtml":"Gracias por solicitar un restablecimiento de contraseña. Para continuar con el restablecimiento de su contraseña, copie y pegue el siguiente código en el formulario de restablecimiento de contraseña:&lt;br /&gt;&lt;br /&gt;%TOKEN%&lt;br /&gt;&lt;br /&gt; Si no desea cambiar su contraseña en este momento, no necesita realizar ninguna acción.\n"}</value>'
+pwm_idletimeoutseconds: 900
+pwm_logouturl: 'http://serverPWM/pwm'
+pwm_configiseditable: true
+pwm_configpasswordhash: '{{ pwm_configpasswordhash_value }}'
