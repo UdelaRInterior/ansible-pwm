@@ -67,10 +67,7 @@ Apache Tomcat 8.5 or later
 | `pwm_ldap_ad_proxyforgotten`| Use Proxy When Password Forgotten | `false` |
 | `pwm_ldap_ad_allowauth_expired`| Allow Authentication When Password Expired | `undefined` |
 | `pwm_password_allowchange_querymatch`| Change Password Permission | `!unsafe '{"ldapProfileID":"all","ldapQuery":"(objectClass=person)","type":"ldapQuery"}'` |
-
 | `pwm_helpdesk_verificationmethods`| Verification Methods | `view file default` |
-
-
 | `pwm_ldap_ad_enforcepwhistoryonset`| Enforce Password Policy During Forgotten Password | `undefined` |
 | `pwm_ldap_ad_allowauth_requirenewpassword`| Allow Authentication When "Must Change Password On Next Login" Is Set | `false` |
 | `pwm_guest_admingroup`| Guest Admin Permission | `undefined` |
