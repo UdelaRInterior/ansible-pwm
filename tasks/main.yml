@@ -24,7 +24,6 @@
     mode: 0755
   register: service_create
 
-#run the handlers now
 - meta: flush_handlers
 
 - name: Copy template
@@ -34,7 +33,7 @@
     owner: tomcat
     group: tomcat
   with_items:
-    - { src: 'dominios.j2', dest: '{{ pwm_path_config }}/dominios.txt' }
+    - { src: 'domains.j2', dest: '{{ pwm_path_config }}/domains.txt' }
     - { src: 'main.cf.j2', dest: '/etc/postfix/main.cf' }
   notify:
     - tomcat
