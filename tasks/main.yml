@@ -52,7 +52,7 @@
 - name: Add path config
   lineinfile:
     path: /var/lib/tomcat/webapps/pwm/WEB-INF/web.xml
-    regexp: '<param-value>unspecified</param-value>'
+    regexp: '^%<param-value>unspecified</param-value>'
     line: '<param-value>{{ pwm_path_config }}</param-value>'
     owner: tomcat
     group: tomcat
