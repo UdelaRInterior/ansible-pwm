@@ -24,11 +24,8 @@
     mode: 0755
   register: service_create
 
-- name: Reload systemctl daemon
-  service:
-    name: tomcat
-    state: restarted
-  when: service_create.changed
+#run the handlers now
+- meta: flush_handlers
 
 - name: Copy template
   template:
@@ -48,15 +45,3 @@
     state: present
     regexp: '^%PWM_APPLICATIONPATH'
     line: 'PWM_APPLICATIONPATH={{ pwm_path_config }}'
-
-- name: Add path config
-  lineinfile:
-    path: /var/lib/tomcat/webapps/pwm/WEB-INF/web.xml
-    regexp: '^%<param-value>unspecified</param-value>'
-    line: '<param-value>{{ pwm_path_config }}</param-value>'
-    owner: tomcat
-    group: tomcat
-    state: present
-  notify:
-    - tomcat
-  when: service_create.changed
