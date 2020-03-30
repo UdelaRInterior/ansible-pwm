@@ -1,0 +1,76 @@
+---
+
+- name: Start Tomcat
+  service:
+    name: tomcat9
+    enabled: true
+    state: started
+
+- name: Download .war from url
+  get_url:
+    force: yes
+    url: "{{ pwm_url_build_war }}"
+    dest: "{{ pwm_path_tomcat }}/webapps/pwm.war"
+    owner: tomcat
+    group: tomcat
+    mode: 0755
+  when:
+    - pwm_url_build_war is defined
+    - pwm_url_build_war != ""
+  register: service_create
+
+- name: Copy .war (from local path)
+  copy:
+    src: "{{ pwm_path_build_war }}"
+    dest: "{{ pwm_path_tomcat }}/webapps/pwm.war"
+    owner: tomcat
+    group: tomcat
+    mode: 0755
+  when:
+    - pwm_url_build_war is not defined or pwm_url_build_war == ""
+    - pwm_path_build_war is defined
+    - pwm_path_build_war != ""
+  register: service_create
+
+# Pause to deploy war
+- pause:
+    seconds: 20
+
+- name: Add path config into war
+  replace:
+    path: "{{ pwm_path_tomcat }}/webapps/pwm/WEB-INF/web.xml"
+    regexp: "<param-value>unspecified</param-value>"
+    replace: "<param-value>{{ pwm_path_tomcat }}/webapps/pwm/config</param-value>"
+  notify:
+    - tomcat
+
+- name: Copy template
+  template:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+    owner: tomcat
+    group: tomcat
+  when: '{{ item.when }}'
+  with_items:
+    - { src: 'domains.j2', dest: '{{ pwm_path_tomcat }}/webapps/pwm/config/domains.txt', when: 'pwm_own_domains_assignments is defined'}
+    - { src: 'PwmConfiguration.xml.j2', dest: '{{ pwm_path_tomcat }}/webapps/pwm/config/PwmConfiguration.xml', when: 'pwm_selfurl is defined'}
+  notify:
+    - tomcat
+
+- name: Copy themes
+  synchronize:
+    src: 'host_vars/{{ inventory_hostname }}/files/themes/{{ item }}'
+    dest: "{{ pwm_path_themes }}"
+    delete: no
+    recursive: yes
+  with_items: '{{ pwm_interface_theme_add }}'
+  when: pwm_interface_theme_add is defined
+
+- name: Change themes, group and permissions
+  file:
+    path: "{{ pwm_path_themes }}"
+    owner: tomcat
+    group: tomcat
+    recurse: yes
+    mode: '0770'
+  when: pwm_interface_theme_add is defined

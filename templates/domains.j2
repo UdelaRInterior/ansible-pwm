@@ -1,3 +1,8 @@
-{% for item in pwm_domains %}
-{{ item }}
-{% endfor %}
+{% if pwm_own_domains_assignments is defined %}
+{%- for urls in pwm_own_domains_assignments %}
+{%- for url in urls.domains %}
+{{ url }}:{% for item in urls.groups %}{{ item }}{% if not loop.last %}:{% endif %}{% endfor -%}
+{{ '\n' -}}
+{%- endfor -%}
+{%- endfor -%}
+{% endif %}
