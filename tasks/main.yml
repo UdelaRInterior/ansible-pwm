@@ -1,64 +1,7 @@
 ---
 
-- name: Create dir
-  file:
-    path: '{{ pwm_path_config }}'
-    state: directory
-    owner: tomcat
-    group: tomcat
-    mode: 0700
+- include_tasks: java.yml
 
-- name: Copy template
-  template:
-    src: PwmConfiguration.xml.j2
-    dest: '{{ pwm_path_config }}/PwmConfiguration.xml'
-    owner: tomcat
-    group: tomcat
+- include_tasks: tomcat.yml
 
-- name: Copy .war
-  copy:
-    src: "{{ pwm_name_war }}"
-    dest: "/var/lib/tomcat/webapps/pwm.war"
-    owner: tomcat
-    group: tomcat
-    mode: 0755
-  register: service_create
-
-- meta: flush_handlers
-
-- name: Copy template
-  template:
-    src: '{{ item.src }}'
-    dest: '{{ item.dest }}'
-    owner: tomcat
-    group: tomcat
-  with_items:
-    - { src: 'domains.j2', dest: '{{ pwm_path_config }}/domains.txt' }
-    - { src: 'main.cf.j2', dest: '/etc/postfix/main.cf' }
-  notify:
-    - tomcat
-
-- name: Add path config
-  lineinfile:
-    dest: /var/lib/tomcat/bin/setenv.sh
-    state: present
-    regexp: '^%PWM_APPLICATIONPATH'
-    line: 'PWM_APPLICATIONPATH={{ pwm_path_config }}'
-
-- name: Copy themes
-  synchronize:
-    src: 'host_vars/{{ inventory_hostname }}/files/themes/{{ item }}'
-    dest: /var/lib/tomcat/webapps/pwm/public/resources/themes
-    delete: no
-    recursive: yes
-  with_items: '{{ pwm_interface_theme_add }}'
-  when: pwm_interface_theme_add is defined
-
-- name: Change themes, group and permissions
-  file:
-    path: /var/lib/tomcat/webapps/pwm/public/resources/themes
-    owner: tomcat
-    group: tomcat
-    recurse: yes
-    mode: '0770'
-  when: pwm_interface_theme_add is defined
+- include_tasks: pwm.yml

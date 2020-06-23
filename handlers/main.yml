@@ -2,5 +2,5 @@
 
 - name: tomcat
   service:
-    name: tomcat
+    name: tomcat9
     state: restarted

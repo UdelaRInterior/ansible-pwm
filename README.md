@@ -10,11 +10,13 @@ Apache Tomcat 8.5 or later
 
 # Role Variables
 
+Below is the full list of variables:
+
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `pwm_path_config`| Path of configuration files    | `/media/pwm` |
-| `pwm_name_war`| File name war | `pwm-2.0.0-SNAPSHOT.war` |
-| `pwm_domains`| Depending on the email domain, the user is added to certain groups | `null` |
+| `pwm_url_build_war`| Pwm build war download url | `https://www.pwm-project.org/artifacts/pwm/build/2020-05-22T05_34_37Z/pwm-2.0.0-SNAPSHOT.war` |
+| `pwm_path_build_war`| Pwm build war path (for development use)  | `` |
 | `pwm_services`| Add all new users to groups of this variable | `null` |
 | `pwm_template_ldap`| LDAP Vendor Default Settings | `OPEN_LDAP` |
 | `pwm_template_storage`| Storage default settings | `LDAP` |
@@ -68,6 +70,8 @@ Apache Tomcat 8.5 or later
 | `pwm_ldap_ad_allowauth_expired`| Allow Authentication When Password Expired | `undefined` |
 | `pwm_password_allowchange_querymatch`| Change Password Permission | `!unsafe '{"ldapProfileID":"all","ldapQuery":"(objectClass=person)","type":"ldapQuery"}'` |
 | `pwm_helpdesk_verificationmethods`| Verification Methods | `view file default` |
+| `pwm_helpdesk_detail_form`| Form detail users (optional) | `view file default` |
+| `pwm_email_sendpassword`| Template send password to mail (optional) | `view file default` |
 | `pwm_ldap_ad_enforcepwhistoryonset`| Enforce Password Policy During Forgotten Password | `undefined` |
 | `pwm_ldap_ad_allowauth_requirenewpassword`| Allow Authentication When "Must Change Password On Next Login" Is Set | `false` |
 | `pwm_guest_admingroup`| Guest Admin Permission | `undefined` |
@@ -105,15 +109,40 @@ Apache Tomcat 8.5 or later
 | `pwm_captcha_recaptcha_mode`| reCAPTCHA Mode| `V3` |
 | `pwm_captcha_protectedpages`| CAPTCHA Protected Pages | `view file default` |
 | `pwm_email_challenge_token`| Forgotten Password Verification Email | `view file default` |
+| `pwm_forgottenusername_form`| Forgotten Password Form (optional)| `view file default` |
 | `pwm_idletimeoutseconds`| Idle Timeout Seconds | `900` |
 | `pwm_logouturl`| Logout URL | `http://serverPWM/pwm` |
 | `pwm_configiseditable`| Edit mode| `true` |
 | `pwm_configpasswordhash`| Password hash| `value` |
 
+For a successful installation, you must override at least the default values of:
+
+- pwm_ldap_serverurls
+- pwm_ldap_proxy_username
+- pwm_ldap_proxy_password
+- pwm_ldap_rootcontexts
+- pwm_ldap_testuser_username
+- pwm_pwmadmin_querymatch:
+- pwm_selfurl
+- pwm_newuser_passwordpolicy_user
+- pwm_newuser_createcontext
+- pwm_helpdesk_queryMatch
+- pwm_newuser_writeattributes
+- pwm_email_default_fromaddress
+- pwm_logouturl
+
+# Variables Version Udelar
+These variables only work with the downloaded version of the following link https://github.com/UdelaRInterior/pwm/releases....
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `pwm_own_domains_assignments`| Depending on the email domain, the user is added to certain groups | `undefined` |
+| `pwm_external_domains_assignments`| Depending on the email domain, but belongs to pwm_domains is added to certain groups | `undefined` |
+| `pwm_newuser_writeattributesnotdomains`| Defined in PwmConfiguration.xml pwm_external_domains_assignments, remove comments in default/main.yml  | `disabled` |
 
 # Dependencies
 
-Previously install 
+Previously install
 
 	*	https://github.com/UdelaRInterior/ansible-role-certbot
 	* 	https://github.com/UdelaRInterior/ansible-reverse-proxy
