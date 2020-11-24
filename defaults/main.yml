@@ -379,6 +379,7 @@ pwm_password_policy_minimumlowercase: 0
 pwm_password_policy_minimumuppercase: 1
 pwm_password_policy_minimumunique: 5
 #pwm_guest_writeattributes: ''
+pwm_allow_roaming: true
 pwm_captcha_recaptcha_privatekey: '{{ pwm_captcha_recaptcha_privatekey_value }}'
 pwm_captcha_recaptcha_publickey: '{{ pwm_captcha_recaptcha_publickey_value }}'
 pwm_captcha_recaptcha_mode: V3
