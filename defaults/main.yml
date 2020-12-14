@@ -378,6 +378,7 @@ pwm_password_policy_maximumsequentialrepeat: 3
 pwm_password_policy_minimumlowercase: 0
 pwm_password_policy_minimumuppercase: 1
 pwm_password_policy_minimumunique: 5
+pwm_enforceWordlist: true
 #pwm_guest_writeattributes: ''
 pwm_allow_roaming: true
 pwm_captcha_recaptcha_privatekey: '{{ pwm_captcha_recaptcha_privatekey_value }}'
