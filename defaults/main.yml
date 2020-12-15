@@ -50,6 +50,7 @@ pwm_securitykey: '{{ pwm_securitykey_vault }}'
 pwm_password_policy_source: PWM
 #pwm_interface_theme_add:
 pwm_interface_theme: pwm
+pwm_logout_after_password_change: false
 pwm_forgottenusername_enable: true
 pwm_recovery_searchfilter: !unsafe '(&amp;(objectClass=person)(cn=%cn%))'
 pwm_recovery_form:
